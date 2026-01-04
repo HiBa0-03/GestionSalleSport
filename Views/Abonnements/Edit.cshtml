@@ -1,0 +1,115 @@
+@model WebApplication1.Models.Abonnement
+@using WebApplication1.Models
+
+@{
+    ViewData["Title"] = "Modifier un Abonnement";
+    var typesAbonnement = ViewData["TypesAbonnement"] as List<string> ?? AbonnementType.GetTypeNames();
+    var prixMensuels = ViewData["PrixMensuels"] as Dictionary<string, decimal> ?? AbonnementType.GetTypes();
+}
+
+<div class="form-modern">
+    <h2 class="section-title mb-4">
+        <i class="fas fa-edit"></i>
+        Modifier l'Abonnement
+    </h2>
+
+    <form method="post" class="row g-4" id="abonnementForm">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-tag"></i> Type d'abonnement
+            </label>
+            <select class="form-select form-control-modern" name="Type" id="typeAbonnement" required>
+                <option value="">-- Sélectionner un type --</option>
+                @foreach (var type in typesAbonnement)
+                {
+                    if (Model.Type == type)
+                    {
+                        <option value="@type" data-prix-mensuel="@prixMensuels[type]" selected>
+                            @type (@prixMensuels[type] DH/mois)
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@type" data-prix-mensuel="@prixMensuels[type]">
+                            @type (@prixMensuels[type] DH/mois)
+                        </option>
+                    }
+                }
+                @if (!string.IsNullOrEmpty(Model.Type) && !typesAbonnement.Contains(Model.Type))
+                {
+                    <option value="@Model.Type" selected data-prix-mensuel="0">
+                        @Model.Type (Prix personnalisé)
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label-modern">
+                <i class="fas fa-calendar-alt"></i> Durée (mois)
+            </label>
+            <input class="form-control form-control-modern" type="number" name="Duree" value="@Model.Duree" min="1" id="dureeMois" placeholder="Durée" required />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label-modern">
+                <i class="fas fa-dollar-sign"></i> Prix Total (DH)
+            </label>
+            <input class="form-control form-control-modern" type="number" step="0.01" name="Prix" value="@Model.Prix" min="0" id="prixTotal" placeholder="0.00" readonly style="background-color: #f8f9fa; cursor: not-allowed;" />
+            <small class="text-muted" id="prixInfo"></small>
+        </div>
+        <div class="col-12 mt-4">
+            <button class="btn btn-modern btn-primary-modern" type="submit">
+                <i class="fas fa-save"></i> Enregistrer les modifications
+            </button>
+            <a class="btn btn-modern btn-secondary-modern" href="/Abonnements">
+                <i class="fas fa-times"></i> Annuler
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeSelect = document.getElementById('typeAbonnement');
+            const dureeInput = document.getElementById('dureeMois');
+            const prixInput = document.getElementById('prixTotal');
+            const prixInfo = document.getElementById('prixInfo');
+
+            function calculerPrix() {
+                const typeOption = typeSelect.options[typeSelect.selectedIndex];
+                const prixMensuel = parseFloat(typeOption.getAttribute('data-prix-mensuel')) || 0;
+                const duree = parseInt(dureeInput.value) || 0;
+
+                if (prixMensuel > 0 && duree > 0) {
+                    const prixTotal = prixMensuel * duree;
+                    prixInput.value = prixTotal.toFixed(2);
+                    prixInfo.textContent = `${prixMensuel} DH/mois × ${duree} mois = ${prixTotal.toFixed(2)} DH`;
+                    prixInfo.style.display = 'block';
+                    prixInput.style.backgroundColor = '#f8f9fa';
+                    prixInput.readOnly = true;
+                } else if (prixMensuel === 0 && typeSelect.value) {
+                    // Type personnalisé - permettre la saisie manuelle
+                    prixInput.readOnly = false;
+                    prixInput.style.backgroundColor = '#ffffff';
+                    prixInfo.textContent = 'Type personnalisé - Saisissez le prix manuellement';
+                    prixInfo.style.display = 'block';
+                } else {
+                    prixInput.value = '';
+                    prixInfo.textContent = '';
+                    prixInfo.style.display = 'none';
+                    prixInput.readOnly = true;
+                    prixInput.style.backgroundColor = '#f8f9fa';
+                }
+            }
+
+            // Calculer le prix au chargement si les valeurs sont déjà présentes
+            if (typeSelect.value && dureeInput.value) {
+                calculerPrix();
+            }
+
+            typeSelect.addEventListener('change', calculerPrix);
+            dureeInput.addEventListener('input', calculerPrix);
+        });
+    </script>
+}

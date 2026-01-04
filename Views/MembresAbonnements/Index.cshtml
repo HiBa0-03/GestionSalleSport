@@ -1,0 +1,143 @@
+@model WebApplication1.Models.MembresAbonnementsViewModel
+
+@{
+    ViewData["Title"] = "Membres et Abonnements";
+}
+
+<div class="container-fluid">
+    <!-- En-tête avec boutons d'action -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">
+            <i class="fas fa-users"></i> Membres et Abonnements
+        </h2>
+        <div class="btn-group">
+            <a class="btn btn-modern btn-primary-modern" href="/Membres/Create">
+                <i class="fas fa-user-plus"></i> Nouveau Membre
+            </a>
+            <a class="btn btn-modern btn-success-modern" href="/Abonnements/Create">
+                <i class="fas fa-id-card"></i> Nouvel Abonnement
+            </a>
+        </div>
+    </div>
+
+    <!-- Section Membres avec leurs Abonnements -->
+    <div class="card-modern mb-4">
+        <div class="card-header-modern">
+            <h3 class="section-title mb-0">
+                <i class="fas fa-users"></i> Membres et leurs Abonnements
+            </h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Membre</th>
+                        <th><i class="fas fa-birthday-cake"></i> Âge</th>
+                        <th><i class="fas fa-phone"></i> Téléphone</th>
+                        <th><i class="fas fa-id-card"></i> Abonnement</th>
+                        <th><i class="fas fa-dollar-sign"></i> Prix</th>
+                        <th><i class="fas fa-calendar-alt"></i> Durée</th>
+                        <th><i class="fas fa-calendar-check"></i> Dernier Paiement</th>
+                        <th><i class="fas fa-money-bill-wave"></i> Total Paiements</th>
+                        <th class="text-end"><i class="fas fa-cog"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.MembreAbonnements != null && Model.MembreAbonnements.Any())
+                    {
+                        @foreach (var item in Model.MembreAbonnements)
+                        {
+                            <tr>
+                                <td><strong>@item.MembreNom</strong></td>
+                                <td>@item.MembreAge ans</td>
+                                <td>@item.MembreTelephone</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.AbonnementType))
+                                    {
+                                        <span class="badge badge-modern" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
+                                            @item.AbonnementType
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Aucun</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.AbonnementPrix.HasValue)
+                                    {
+                                        <span class="text-success fw-bold">@item.AbonnementPrix.Value.ToString("F2") DH</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.AbonnementDuree.HasValue)
+                                    {
+                                        <span>@item.AbonnementDuree.Value mois</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.DernierPaiement.HasValue)
+                                    {
+                                        <span>@item.DernierPaiement.Value.ToString("dd/MM/yyyy")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Aucun</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.TotalPaiements.HasValue && item.TotalPaiements.Value > 0)
+                                    {
+                                        <span class="text-success fw-bold">@item.TotalPaiements.Value.ToString("F2") DH</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">0 DH</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-modern btn-sm-modern btn-info-modern" href="/Membres/Details/@item.MembreId" title="Détails Membre">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-modern btn-sm-modern btn-warning-modern" href="/Membres/Edit/@item.MembreId" title="Modifier Membre">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        @if (item.AbonnementId.HasValue)
+                                        {
+                                            <a class="btn btn-modern btn-sm-modern btn-primary-modern" href="/Abonnements/Details/@item.AbonnementId" title="Détails Abonnement">
+                                                <i class="fas fa-id-card"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center text-muted py-5">
+                                <i class="fas fa-inbox fa-3x mb-3"></i>
+                                <p>Aucun membre enregistré pour le moment.</p>
+                                <a href="/Membres/Create" class="btn btn-modern btn-primary-modern">
+                                    <i class="fas fa-plus"></i> Créer le premier membre
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

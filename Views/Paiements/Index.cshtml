@@ -1,0 +1,67 @@
+@model IEnumerable<WebApplication1.Models.Paiement>
+
+@{
+    ViewData["Title"] = "Paiements";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title">
+        <i class="fas fa-credit-card"></i>
+        Liste des Paiements
+    </h2>
+    <a class="btn btn-modern btn-primary-modern" href="/Paiements/Create">
+        <i class="fas fa-plus"></i>
+        Ajouter un paiement
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-modern">
+        <thead>
+            <tr>
+                <th><i class="fas fa-calendar"></i> Date</th>
+                <th><i class="fas fa-money-bill-wave"></i> Montant</th>
+                <th><i class="fas fa-user"></i> Membre</th>
+                <th class="text-end"><i class="fas fa-cog"></i> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach(var p in Model)
+            {
+                <tr>
+                    <td>@p.Date.ToString("dd/MM/yyyy")</td>
+                    <td><span class="badge badge-modern" style="background: linear-gradient(135deg, #f59e0b, #d97706);">@p.Montant DH</span></td>
+                    <td><strong>@(p.Membre?.Nom ?? "N/A")</strong></td>
+                    <td class="text-end">
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-modern btn-sm-modern btn-info-modern" href="/Paiements/Details/@p.Id" title="Détails">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a class="btn btn-modern btn-sm-modern btn-warning-modern" href="/Paiements/Edit/@p.Id" title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn btn-modern btn-sm-modern btn-danger-modern" href="/Paiements/Delete/@p.Id" title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted py-5">
+                    <i class="fas fa-inbox fa-3x mb-3"></i>
+                    <p>Aucun paiement enregistré pour le moment.</p>
+                    <a href="/Paiements/Create" class="btn btn-modern btn-primary-modern">
+                        <i class="fas fa-plus"></i> Ajouter le premier paiement
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

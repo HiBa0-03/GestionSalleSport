@@ -1,0 +1,57 @@
+@model WebApplication1.Models.CreateAdminViewModel
+
+@{
+    ViewData["Title"] = "Créer un Administrateur";
+}
+
+<div class="form-modern">
+    <h2 class="section-title mb-4">
+        <i class="fas fa-user-plus"></i>
+        Créer un Nouvel Administrateur
+    </h2>
+
+    <form asp-action="Create" method="post" class="row g-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-user"></i> Nom d'utilisateur
+            </label>
+            <input asp-for="Username" class="form-control form-control-modern" placeholder="Entrez le nom d'utilisateur" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-key"></i> Mot de passe
+            </label>
+            <input asp-for="Password" class="form-control form-control-modern" type="password" placeholder="Minimum 6 caractères" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-key"></i> Confirmer le mot de passe
+            </label>
+            <input asp-for="ConfirmPassword" class="form-control form-control-modern" type="password" placeholder="Confirmez le mot de passe" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <div class="col-12 mt-4">
+            <button class="btn btn-modern btn-primary-modern" type="submit">
+                <i class="fas fa-save"></i> Créer l'administrateur
+            </button>
+            <a class="btn btn-modern btn-secondary-modern" asp-action="Index">
+                <i class="fas fa-times"></i> Annuler
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+

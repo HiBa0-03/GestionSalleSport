@@ -1,0 +1,67 @@
+@model IEnumerable<WebApplication1.Models.Abonnement>
+
+@{
+    ViewData["Title"] = "Abonnements";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title">
+        <i class="fas fa-id-card"></i>
+        Liste des Abonnements
+    </h2>
+    <a class="btn btn-modern btn-primary-modern" href="/Abonnements/Create">
+        <i class="fas fa-plus"></i>
+        Créer un abonnement
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-modern">
+        <thead>
+            <tr>
+                <th><i class="fas fa-tag"></i> Type</th>
+                <th><i class="fas fa-dollar-sign"></i> Prix</th>
+                <th><i class="fas fa-calendar-alt"></i> Durée (mois)</th>
+                <th class="text-end"><i class="fas fa-cog"></i> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach(var a in Model)
+            {
+                <tr>
+                    <td><strong>@a.Type</strong></td>
+                    <td><span class="badge badge-modern" style="background: linear-gradient(135deg, #10b981, #059669);">@a.Prix DH</span></td>
+                    <td>@a.Duree mois</td>
+                    <td class="text-end">
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-modern btn-sm-modern btn-info-modern" href="/Abonnements/Details/@a.Id" title="Détails">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a class="btn btn-modern btn-sm-modern btn-warning-modern" href="/Abonnements/Edit/@a.Id" title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn btn-modern btn-sm-modern btn-danger-modern" href="/Abonnements/Delete/@a.Id" title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted py-5">
+                    <i class="fas fa-inbox fa-3x mb-3"></i>
+                    <p>Aucun abonnement enregistré pour le moment.</p>
+                    <a href="/Abonnements/Create" class="btn btn-modern btn-primary-modern">
+                        <i class="fas fa-plus"></i> Créer le premier abonnement
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

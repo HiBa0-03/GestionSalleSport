@@ -1,0 +1,94 @@
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="text-center mb-5">
+    <h1 class="page-title">Bienvenue à Perfect Fitness</h1>
+    <p class="lead text-muted">Système de gestion complet pour votre salle de sport</p>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-6">
+        <div class="card-modern">
+            <div class="card-icon" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="card-title">Membres & Abonnements</h3>
+            <p class="card-description">
+                Gérez facilement tous vos membres avec leurs abonnements associés. Consultez, modifiez et créez des membres et des abonnements en un seul endroit.
+            </p>
+            <a href="/MembresAbonnements" class="card-link">
+                Accéder aux Membres & Abonnements
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card-modern">
+            <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                <i class="fas fa-credit-card"></i>
+            </div>
+            <h3 class="card-title">Gestion des Paiements</h3>
+            <p class="card-description">
+                Suivez tous les paiements effectués par vos membres avec dates et montants détaillés.
+            </p>
+            <a href="/Paiements" class="card-link">
+                Accéder aux Paiements
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-12">
+        <div class="card-modern">
+            <h3 class="section-title">
+                <i class="fas fa-info-circle"></i>
+                À propos du système
+            </h3>
+            <p class="text-muted mb-4">
+                Perfect Fitness est une solution complète de gestion pour les salles de sport. 
+                Notre système vous permet de gérer efficacement vos membres, leurs abonnements et leurs paiements 
+                en toute simplicité grâce à une interface moderne et intuitive.
+            </p>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stats-label">Gestion Membres</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <div class="stats-number">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="stats-label">Types Abonnements</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <div class="stats-number">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="stats-label">Suivi Paiements</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <a href="/Rapports" class="text-decoration-none">
+                        <div class="stats-card" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;">
+                            <div class="stats-number">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stats-label" style="color: white;">Rapports</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

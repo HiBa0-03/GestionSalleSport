@@ -1,0 +1,60 @@
+@model WebApplication1.Models.Membre
+
+@{
+    ViewData["Title"] = "Détails du Membre";
+}
+
+<div class="form-modern">
+    <h2 class="section-title mb-4">
+        <i class="fas fa-user"></i>
+        Détails du Membre
+    </h2>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card-modern text-center">
+                <div class="card-icon mx-auto mb-3">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h4 class="card-title">@Model.Nom</h4>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-modern">
+                <dl class="row g-3">
+                    <dt class="col-sm-4">
+                        <i class="fas fa-user text-primary"></i> Nom complet
+                    </dt>
+                    <dd class="col-sm-8">
+                        <strong>@Model.Nom</strong>
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        <i class="fas fa-birthday-cake text-primary"></i> Âge
+                    </dt>
+                    <dd class="col-sm-8">
+                        <span class="badge badge-modern" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
+                            @Model.Age ans
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        <i class="fas fa-phone text-primary"></i> Téléphone
+                    </dt>
+                    <dd class="col-sm-8">
+                        <strong>@Model.Telephone</strong>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a class="btn btn-modern btn-secondary-modern" href="/Membres">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+        <a class="btn btn-modern btn-warning-modern" href="/Membres/Edit/@Model.Id">
+            <i class="fas fa-edit"></i> Modifier
+        </a>
+    </div>
+</div>

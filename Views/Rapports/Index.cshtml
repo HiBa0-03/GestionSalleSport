@@ -1,0 +1,99 @@
+@model WebApplication1.Models.RapportViewModel
+
+@{
+    ViewData["Title"] = "Rapports";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title">
+        <i class="fas fa-chart-line"></i>
+        Rapports & Statistiques
+    </h2>
+    <a class="btn btn-modern btn-secondary-modern" href="/">
+        <i class="fas fa-arrow-left"></i> Retour à l'accueil
+    </a>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stats-card">
+            <div class="stats-number">@Model.MembresCount</div>
+            <div class="stats-label">Membres</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+            <div class="stats-number">@Model.AbonnementsCount</div>
+            <div class="stats-label">Abonnements</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <div class="stats-number">@Model.PaiementsCount</div>
+            <div class="stats-label">Paiements</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+            <div class="stats-number">@Model.TotalRevenus.ToString("0.00") DH</div>
+            <div class="stats-label">Revenus totaux</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card-modern">
+            <div class="section-title mb-2">
+                <i class="fas fa-wallet"></i>
+                Revenus 30 derniers jours
+            </div>
+            <div class="stats-number" style="color: var(--primary-color);">
+                @Model.Revenus30Jours.ToString("0.00") DH
+            </div>
+            <p class="text-muted mb-0">Total des paiements reçus sur les 30 derniers jours.</p>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card-modern">
+            <div class="section-title mb-3">
+                <i class="fas fa-receipt"></i>
+                Derniers paiements
+            </div>
+            <div class="table-responsive">
+                <table class="table table-modern mb-0">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Membre</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DerniersPaiements != null && Model.DerniersPaiements.Any())
+                        {
+                            foreach (var p in Model.DerniersPaiements)
+                            {
+                                <tr>
+                                    <td>@p.Date.ToString("dd/MM/yyyy")</td>
+                                    <td>@(p.Membre?.Nom ?? "N/A")</td>
+                                    <td><span class="badge badge-modern" style="background: linear-gradient(135deg, #f59e0b, #d97706);">@p.Montant.ToString("0.00") DH</span></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-4">
+                                    <i class="fas fa-inbox fa-2x mb-2"></i>
+                                    <div>Aucun paiement enregistré.</div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

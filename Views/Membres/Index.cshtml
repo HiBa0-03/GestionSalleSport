@@ -1,0 +1,67 @@
+@model IEnumerable<WebApplication1.Models.Membre>
+
+@{
+    ViewData["Title"] = "Membres";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title">
+        <i class="fas fa-users"></i>
+        Liste des Membres
+    </h2>
+    <a class="btn btn-modern btn-primary-modern" href="/Membres/Create">
+        <i class="fas fa-plus"></i>
+        Créer un membre
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-modern">
+        <thead>
+            <tr>
+                <th><i class="fas fa-user"></i> Nom</th>
+                <th><i class="fas fa-birthday-cake"></i> Age</th>
+                <th><i class="fas fa-phone"></i> Téléphone</th>
+                <th class="text-end"><i class="fas fa-cog"></i> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach(var m in Model)
+            {
+                <tr>
+                    <td><strong>@m.Nom</strong></td>
+                    <td>@m.Age ans</td>
+                    <td>@m.Telephone</td>
+                    <td class="text-end">
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-modern btn-sm-modern btn-info-modern" href="/Membres/Details/@m.Id" title="Détails">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a class="btn btn-modern btn-sm-modern btn-warning-modern" href="/Membres/Edit/@m.Id" title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn btn-modern btn-sm-modern btn-danger-modern" href="/Membres/Delete/@m.Id" title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted py-5">
+                    <i class="fas fa-inbox fa-3x mb-3"></i>
+                    <p>Aucun membre enregistré pour le moment.</p>
+                    <a href="/Membres/Create" class="btn btn-modern btn-primary-modern">
+                        <i class="fas fa-plus"></i> Créer le premier membre
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

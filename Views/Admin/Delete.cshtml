@@ -1,0 +1,71 @@
+@model WebApplication1.Models.Admin
+
+@{
+    ViewData["Title"] = "Supprimer l'Administrateur";
+}
+
+<div class="form-modern">
+    <h2 class="section-title mb-4 text-danger">
+        <i class="fas fa-exclamation-triangle"></i>
+        Supprimer l'Administrateur
+    </h2>
+
+    <div class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Attention !</strong> Êtes-vous sûr de vouloir supprimer cet administrateur ? Cette action est irréversible.
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="info-box-modern">
+                <label class="info-label-modern">
+                    <i class="fas fa-id-card"></i> ID
+                </label>
+                <div class="info-value-modern">@Model.Id</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-box-modern">
+                <label class="info-label-modern">
+                    <i class="fas fa-user"></i> Nom d'utilisateur
+                </label>
+                <div class="info-value-modern">@Model.Username</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-box-modern">
+                <label class="info-label-modern">
+                    <i class="fas fa-envelope"></i> Email
+                </label>
+                <div class="info-value-modern">@Model.Email</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-box-modern">
+                <label class="info-label-modern">
+                    <i class="fas fa-calendar"></i> Date de création
+                </label>
+                <div class="info-value-modern">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+            </div>
+        </div>
+
+        <div class="col-12 mt-4">
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-modern btn-danger-modern">
+                    <i class="fas fa-trash"></i> Confirmer la suppression
+                </button>
+                <a class="btn btn-modern btn-secondary-modern" asp-action="Index">
+                    <i class="fas fa-times"></i> Annuler
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,115 @@
+@model WebApplication1.Models.EditMembreViewModel
+
+@{
+    ViewData["Title"] = "Modifier un Membre";
+}
+
+<div class="form-modern">
+    <h2 class="section-title mb-4">
+        <i class="fas fa-edit"></i>
+        Modifier le Membre
+    </h2>
+
+    <form asp-action="Edit" method="post" class="row g-4">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-user"></i> Nom complet
+            </label>
+            <input asp-for="Nom" class="form-control form-control-modern" placeholder="Entrez le nom complet du membre" />
+            <span asp-validation-for="Nom" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-phone"></i> Téléphone
+            </label>
+            <input asp-for="Telephone" class="form-control form-control-modern" placeholder="06XXXXXXXX" />
+            <span asp-validation-for="Telephone" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-birthday-cake"></i> Âge
+            </label>
+            <input asp-for="Age" class="form-control form-control-modern" type="number" min="1" max="120" placeholder="Âge" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-id-card"></i> Type d'abonnement
+            </label>
+            <select asp-for="TypeAbonnement" class="form-control form-control-modern" id="typeAbonnement" onchange="calculerPrix()">
+                <option value="">-- Sélectionner un type d'abonnement --</option>
+                @if (ViewData["TypesAbonnement"] is List<string> types)
+                {
+                    @foreach (var type in types)
+                    {
+                        if (type == Model.TypeAbonnement)
+                        {
+                            <option value="@type" selected>@type</option>
+                        }
+                        else
+                        {
+                            <option value="@type">@type</option>
+                        }
+                    }
+                }
+            </select>
+            <span asp-validation-for="TypeAbonnement" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label-modern">
+                <i class="fas fa-calendar-alt"></i> Durée (mois)
+            </label>
+            <input asp-for="Duree" class="form-control form-control-modern" type="number" min="1" id="dureeAbonnement" onchange="calculerPrix()" placeholder="Durée en mois" />
+            <span asp-validation-for="Duree" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> 
+                <strong>Prix total :</strong> <span id="prixTotal" class="fw-bold text-success">0,00 DH</span>
+                <small class="text-muted">(calculé automatiquement selon le type et la durée)</small>
+            </div>
+        </div>
+
+        <div class="col-12 mt-4">
+            <button class="btn btn-modern btn-primary-modern" type="submit">
+                <i class="fas fa-save"></i> Enregistrer les modifications
+            </button>
+            <a class="btn btn-modern btn-secondary-modern" href="/Membres">
+                <i class="fas fa-times"></i> Annuler
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const prixMensuels = @Html.Raw(Json.Serialize(ViewData["PrixMensuels"]));
+
+        function calculerPrix() {
+            const type = document.getElementById('typeAbonnement').value;
+            const duree = parseInt(document.getElementById('dureeAbonnement').value) || 0;
+            
+            if (type && duree > 0 && prixMensuels[type]) {
+                const prixMensuel = prixMensuels[type];
+                const prixTotal = prixMensuel * duree;
+                document.getElementById('prixTotal').textContent = prixTotal.toFixed(2) + ' DH';
+            } else {
+                document.getElementById('prixTotal').textContent = '0,00 DH';
+            }
+        }
+
+        // Calculer le prix au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            calculerPrix();
+        });
+    </script>
+}

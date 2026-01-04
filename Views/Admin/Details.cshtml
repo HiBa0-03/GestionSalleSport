@@ -1,0 +1,54 @@
+@model WebApplication1.Models.Admin
+
+@{
+    ViewData["Title"] = "Détails de l'Administrateur";
+}
+
+<div class="form-modern">
+    <h2 class="section-title mb-4">
+        <i class="fas fa-user"></i>
+        Détails de l'Administrateur
+    </h2>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="info-box-modern">
+                <label class="info-label-modern">
+                    <i class="fas fa-id-card"></i> ID
+                </label>
+                <div class="info-value-modern">@Model.Id</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-box-modern">
+                <label class="info-label-modern">
+                    <i class="fas fa-user"></i> Nom d'utilisateur
+                </label>
+                <div class="info-value-modern">@Model.Username</div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-box-modern">
+                <label class="info-label-modern">
+                    <i class="fas fa-calendar"></i> Date de création
+                </label>
+                <div class="info-value-modern">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+            </div>
+        </div>
+
+        <div class="col-12 mt-4">
+            <a class="btn btn-modern btn-warning-modern" asp-action="Edit" asp-route-id="@Model.Id">
+                <i class="fas fa-edit"></i> Modifier
+            </a>
+            <a class="btn btn-modern btn-secondary-modern" asp-action="Index">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
